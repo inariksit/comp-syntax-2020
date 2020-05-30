@@ -37,6 +37,7 @@ concrete MicroLangDummyWithGender of MicroLang = {
      = {s : NounClass => Str} ;
 
   param
+    -- Arbitrary noun classes
     NounClass = Class1 | Class2 ;
 
   lin
@@ -65,8 +66,9 @@ concrete MicroLangDummyWithGender of MicroLang = {
 
     -- : Comp  -> VP ;           -- be small
     UseComp comp = {
-      s = table {
-            cl => "be" ++ comp.s ! cl } ;
+      s = table { -- Copula inflects in NounClass
+            Class1 => "be.Verb.Class1" ++ comp.s ! Class1 ;
+            Class2 => "be.Verb.Class2" ++ comp.s ! Class2 } ;
       } ;
 
     -- : AP  -> Comp ;           -- small
@@ -75,9 +77,7 @@ concrete MicroLangDummyWithGender of MicroLang = {
     -- : VP -> Adv -> VP ;       -- sleep here
     AdvVP vp adv = {
       s = table {
-            Class1 => vp.s ! Class1 ++ adv.s ;
-            Class2 => vp.s ! Class2 ++ adv.s 
-        } ;
+            cl => vp.s ! cl ++ adv.s } ;
       } ;
 
 -- Noun
@@ -96,10 +96,10 @@ concrete MicroLangDummyWithGender of MicroLang = {
     -- : Det ;                   -- indefinite plural
     aPl_Det = {s = ""} ;
 
-    -- : Det ;                   -- definite singular   ---s
+    -- : Det ;                   -- definite singular
     the_Det = {s = "the"} ;
 
-    -- : Det ;                   -- definite plural     ---s
+    -- : Det ;                   -- definite plural
     thePl_Det = {s = "the"} ;
 
     -- : N -> CN ;               -- house
@@ -131,7 +131,7 @@ concrete MicroLangDummyWithGender of MicroLang = {
 
 oper
 
-  mkPrep : Str -> {s : Str}  ;
+  mkPrep : Str -> {s : Str} ;
   mkPrep str = {s = str} ;
 
   mkPron : Str -> NounClass -> {s : Str ; g : NounClass} ;
@@ -142,6 +142,7 @@ oper
 -----------------------------------------------------
 
 oper
+
   mkN : Str -> NounClass -> {s : Str ; g : NounClass} ;
   mkN   str    nc         = {s = str ; g = nc} ;
 
