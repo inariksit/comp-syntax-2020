@@ -1,10 +1,24 @@
 # Dummy grammar: a very minimal concrete syntax
 
-These grammars are meant for beginner GF grammarians to get started easier.
+These grammars are meant for beginner GF grammarians to get started easier. They are written in a series of video tutorials, found at https://www.youtube.com/playlist?list=PL4L18Hhub0qFgLgFmzE4h-FxqemBcvWSW.
 
 ## MicroLangDummy.gf
 
 All lincats are `{s : Str}`, all grammar rules are string concatenation. Produces sentences like "bird be bad", "they break they".
+
+## MicroLangDummyWithResModule.gf + ResDummy.gf
+
+Added a resource module `ResDummy` and moved lexical constructors there. Added also number in nouns, compare the differences to the base dummy:
+
+```
+MicroLang: PredVPS (DetCN aPl_Det (AdjCN (PositA small_A) (UseN friend_N))) (UseV jump_V)
+MicroLangDummy: small friend jump
+MicroLangDummyWithResModule: small friends jump
+
+MicroLang: PredVPS (DetCN aPl_Det (AdjCN (PositA big_A) (UseN woman_N))) (UseComp (CompAP (PositA cold_A)))
+MicroLangDummy: big woman be cold
+MicroLangDummyWithResModule: big women be cold
+```
 
 ## MicroLangDummyWithGender.gf
 
