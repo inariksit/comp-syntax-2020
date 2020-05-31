@@ -1,6 +1,8 @@
 # Dummy grammar: a very minimal concrete syntax
 
-These grammars are meant for beginner GF grammarians to get started easier. They are written in a series of video tutorials, found at https://www.youtube.com/playlist?list=PL4L18Hhub0qFgLgFmzE4h-FxqemBcvWSW.
+These grammars are meant for beginner GF grammarians to get started easier.
+
+I've made a series of video tutorials, found at https://www.youtube.com/playlist?list=PL4L18Hhub0qFgLgFmzE4h-FxqemBcvWSW. The videos show incremental improvements to the base grammar `MicroLangDummy`, and how to handle common error messages.
 
 ## MicroLangDummy.gf
 
@@ -15,9 +17,9 @@ MicroLang: PredVPS (DetCN aPl_Det (AdjCN (PositA small_A) (UseN friend_N))) (Use
 MicroLangDummy: small friend jump
 MicroLangDummyWithResModule: small friends jump
 
-MicroLang: PredVPS (DetCN aPl_Det (AdjCN (PositA big_A) (UseN woman_N))) (UseComp (CompAP (PositA cold_A)))
-MicroLangDummy: big woman be cold
-MicroLangDummyWithResModule: big women be cold
+MicroLang: PredVPS (DetCN aPl_Det (AdjCN (PositA big_A) (UseN city_N))) (UseComp (CompAP (PositA cold_A)))
+MicroLangDummy: big city be cold
+MicroLangDummyWithResModule: big cities be cold
 ```
 
 ## MicroLangDummyWithGender.gf
