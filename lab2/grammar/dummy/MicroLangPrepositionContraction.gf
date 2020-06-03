@@ -2,6 +2,8 @@
 
 concrete MicroLangPrepositionContraction of MicroLang = {
 
+-- Dutch with a lexicon of only words that are similar to English.
+-- e.g. computer_N = mkN "computer" De ;
 
 -----------------------------------------------------
 ---------------- Grammar part -----------------------
