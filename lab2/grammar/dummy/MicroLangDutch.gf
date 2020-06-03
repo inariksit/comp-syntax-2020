@@ -15,11 +15,13 @@ concrete MicroLangDutch of MicroLang = {
     S,      -- declarative sentence                e.g. "she lives here"
     VP,     -- verb phrase                         e.g. "lives here"
     Comp,   -- complement of copula                e.g. "warm"
-    NP,     -- noun phrase (subject or object)     e.g. "the red house"
     V,      -- one-place verb                      e.g. "sleep" 
     V2,     -- two-place verb                      e.g. "love"
     Adv     -- adverbial phrase                    e.g. "in the house"
      = {s : Str} ;
+
+    NP      -- noun phrase (subject or object)     e.g. "the red house"
+      = Pronoun ** {ct : Contraction} ;
 
     Pron    -- personal pronoun                    e.g. "she"
       = Pronoun ;
@@ -42,18 +44,18 @@ concrete MicroLangDutch of MicroLang = {
     UttS s = s ;
 
     -- : NP -> Utt ;         -- he
-    UttNP np = np ;
+    UttNP np = {s = np.s ! Nom} ;
 
 -- Sentence
     -- : NP -> VP -> S ;             -- John walks
-    PredVPS np vp = {s = np.s ++ vp.s} ;
+    PredVPS np vp = {s = np.s ! Nom ++ vp.s} ;
 
 -- Verb
     -- : V   -> VP ;             -- sleep
     UseV v = v ;
 
     -- : V2  -> NP -> VP ;       -- love it
-    ComplV2 v2 np = {s = v2.s ++ np.s} ;
+    ComplV2 v2 np = {s = v2.s ++ np.s ! Acc} ;
 
     -- : Comp  -> VP ;           -- be small
     UseComp comp = {s = "is" ++ comp.s} ;
@@ -67,11 +69,12 @@ concrete MicroLangDutch of MicroLang = {
 -- Noun
     -- : Det -> CN -> NP ;       -- the man
     DetCN det cn = {
-      s = det.s ! cn.g ++ cn.s ;
+      s = table {_ => det.s ! cn.g ++ cn.s} ;
+      ct = NoContr ;
     } ;
 
     -- : Pron -> NP ;            -- she
-    UsePron pron = pron ;
+    UsePron pron = pron ** {ct = Contr} ;
 
     -- : Det ;                   -- indefinite singular
     -- a_Det = {s = table {_ => "een"}} ;
@@ -103,24 +106,37 @@ concrete MicroLangDutch of MicroLang = {
 
 -- Adverb
     -- : Prep -> NP -> Adv ;     -- in the house
-    PrepNP prep np = {s = prep.s ++ np.s} ;
+    PrepNP prep np = {s =
+      case <prep.ct,np.ct> of {
+        <Contr, Contr> => prep.contr_form ;
+        _ => prep.s ++ np.s ! Acc
+
+      } ;
+    } ;
 
 -- Structural
     -- : Prep ;
-    in_Prep = mkPrep "in" ;
-    on_Prep = mkPrep "op" ;
-    with_Prep = mkPrep "met" ;
-    without_Prep = mkPrep "zonder" ;
+    in_Prep = mkPrep "in" "erin" Contr ;
+    on_Prep = mkPrep "op" "erop" Contr ;
+    with_Prep = mkPrep "met" "ermee" Contr ;
+    without_Prep = mkPrep "zonder" ":(" NoContr ;
 
     {- TODO: prepositions and pronouns combine
          "on him/her"   ≠ "op hem/haar"
          "in him/her"   ≠ "in hem/haar"
          "with him/her" ≠ "met hem/haar"
-       = "erop", "erin", "ermee"
-     but "without him/her" = "zonder hem/haar" -}
+       = "erop" "erin" "ermee"
 
-    he_Pron   = mkPron "hij" ;
-    she_Pron  = mkPron "zij" ;
+      More forms:
+        this: "hierop" "hierin" "hiermee" …
+        that: "daarop" "daarin" "daarmee" …
+        what: "waarop" "waarin" "waarmee" …
+        + some, none, all …
+
+     -}
+
+    he_Pron   = mkPron "hij" "hem" ;
+    she_Pron  = mkPron "zij" "haar" ;
 {-     they_Pron = mkPron "zij" ; -- No plurals yet -}
 
 -----------------------------------------------------
@@ -223,17 +239,31 @@ lin
 -- Resource + paradigms --
 --------------------------
 
+param
+  Contraction = Contr | NoContr ;
+  Case = Nom | Acc ;
+
 oper
 
-  Preposition : Type = {s : Str} ;
+  Preposition : Type = {
+    s : Str ;
+    contr_form : Str ;
+    ct : Contraction
+    } ;
 
-  mkPrep : Str -> Preposition ;
-  mkPrep str = {s = str} ;
+  mkPrep : Str -> Str -> Contraction -> Preposition ;
+  mkPrep str contr ct = {
+    s = str ;
+    contr_form = contr ;
+    ct = ct
+  } ;
 
-  Pronoun : Type = {s : Str} ;
+  Pronoun : Type = {s : Case => Str} ;
 
-  mkPron : Str -> Pronoun ;
-  mkPron str = {s = str} ;
+  mkPron : Str -> Str -> Pronoun ;
+  mkPron nom acc = {
+    s = table {Nom => nom ; Acc => acc}
+    } ;
 
 param
   Gender = De | Het ;
