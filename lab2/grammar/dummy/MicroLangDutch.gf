@@ -21,7 +21,7 @@ concrete MicroLangDutch of MicroLang = {
      = {s : Str} ;
 
     NP      -- noun phrase (subject or object)     e.g. "the red house"
-      = Pronoun ** {ct : Contraction} ;
+      = Pronoun ** {ct : NPContraction} ;
 
     Pron    -- personal pronoun                    e.g. "she"
       = Pronoun ;
@@ -67,14 +67,29 @@ concrete MicroLangDutch of MicroLang = {
     AdvVP vp adv = {s = vp.s ++ adv.s} ;
 
 -- Noun
+    ThisNP = {
+      s = table {_ => "dit"} ;
+      ct = Yes Dit ;
+    } ;
+
+    ThatNP = {
+      s = table {_ => "dat"} ;
+      ct = Yes Dat ;
+    } ;
+
+    SomethingNP = {
+      s = table {_ => "iets"} ;
+      ct = Yes Iets ;
+    } ;
+
     -- : Det -> CN -> NP ;       -- the man
     DetCN det cn = {
       s = table {_ => det.s ! cn.g ++ cn.s} ;
-      ct = NoContr ;
+      ct = No ;
     } ;
 
     -- : Pron -> NP ;            -- she
-    UsePron pron = pron ** {ct = Contr} ;
+    UsePron pron = pron ** {ct = Yes Er} ;
 
     -- : Det ;                   -- indefinite singular
     -- a_Det = {s = table {_ => "een"}} ;
@@ -108,7 +123,7 @@ concrete MicroLangDutch of MicroLang = {
     -- : Prep -> NP -> Adv ;     -- in the house
     PrepNP prep np = {s =
       case <prep.ct,np.ct> of {
-        <Contr, Contr> => prep.contr_form ;
+        <Contr, Yes dem> => prep.contr_forms ! dem ;
         _ => prep.s ++ np.s ! Acc
 
       } ;
@@ -116,10 +131,10 @@ concrete MicroLangDutch of MicroLang = {
 
 -- Structural
     -- : Prep ;
-    in_Prep = mkPrep "in" "erin" Contr ;
-    on_Prep = mkPrep "op" "erop" Contr ;
-    with_Prep = mkPrep "met" "ermee" Contr ;
-    without_Prep = mkPrep "zonder" ":(" NoContr ;
+    in_Prep = mkPrep "in" "in" Contr ;
+    on_Prep = mkPrep "op" "op" Contr ;
+    with_Prep = mkPrep "met" "mee" Contr ;
+    without_Prep = mkPrep "zonder" "zonder" NoContr ;
 
     {- TODO: prepositions and pronouns combine
          "on him/her"   ≠ "op hem/haar"
@@ -132,6 +147,10 @@ concrete MicroLangDutch of MicroLang = {
         that: "daarop" "daarin" "daarmee" …
         what: "waarop" "waarin" "waarmee" …
         + some, none, all …
+
+      Separate in negation (Wikipedia):
+        Ik reken erop.       'I am counting on it.'
+        Ik reken er niet op. 'I am not counting on it.'
 
      -}
 
@@ -241,20 +260,32 @@ lin
 
 param
   Contraction = Contr | NoContr ;
+
+  NPContraction = Yes Demonstrative | No ;
+
   Case = Nom | Acc ;
+  Demonstrative = Er | Dit | Dat | Wat | Alles | Iets | Niets ;
 
 oper
 
   Preposition : Type = {
     s : Str ;
-    contr_form : Str ;
+    contr_forms : Demonstrative => Str ;
     ct : Contraction
     } ;
 
   mkPrep : Str -> Str -> Contraction -> Preposition ;
-  mkPrep str contr ct = {
-    s = str ;
-    contr_form = contr ;
+  mkPrep met mee ct = {
+    s = met ;
+    contr_forms = table {
+        Er => "er" + mee ;
+        Dit => "hier" + mee ;
+        Dat => "daar" + mee ;
+        Wat => "waar" + mee ;
+        Alles => "overal" ++ mee ;
+        Iets => "ergens" ++ mee ;
+        Niets => "nergens" ++ mee
+      } ;
     ct = ct
   } ;
 

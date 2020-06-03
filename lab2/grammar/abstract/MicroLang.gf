@@ -43,6 +43,7 @@ abstract MicroLang = {
     AdvVP     : VP -> Adv -> VP ;       -- sleep here
 
 -- Noun
+    ThisNP, ThatNP, SomethingNP : NP ;  -- Added for Preposition contraction example /Inari
     DetCN     : Det -> CN -> NP ;       -- the man
     UsePron   : Pron -> NP ;            -- she
     a_Det     : Det ;                   -- indefinite singular ---s
@@ -62,6 +63,7 @@ abstract MicroLang = {
     in_Prep   : Prep ;
     on_Prep   : Prep ;
     with_Prep : Prep ;
+    without_Prep : Prep ; -- Added for Preposition contraction example /Inari
 
     he_Pron   : Pron ;
     she_Pron  : Pron ;
