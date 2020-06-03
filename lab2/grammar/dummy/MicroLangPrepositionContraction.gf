@@ -1,6 +1,6 @@
 --# -path=.:../abstract
 
-concrete MicroLangDutch of MicroLang = {
+concrete MicroLangPrepositionContraction of MicroLang = {
 
 
 -----------------------------------------------------
@@ -173,86 +173,11 @@ lin
   cold_A = mkA "koud" ;
   come_V = mkV "komt" ; -- 3rd person sg form
   computer_N = mkN "computer" De ;
-  swim_V = mkV "zwemt" ;
+  swim_V = mkV "zwemt" ; -- 3rd person sg form
   warm_A = mkA "warm" ;
   water_N = mkN "water" Het ;
   white_A = mkA "wit" ;
   wine_N = mkN "wijn" De ;
-{-
-  already_Adv = mkAdv "al" ;
-  animal_N = mkN "dier" Het ;
-  bad_A = mkA "slecht" ;
-  big_A = mkA "groot" ;
-  bike_N = mkN "fiets" De ;
-  bird_N = mkN "vogel" De ;
-  black_A = mkA "zwart" ;
-  boat_N = mkN "boot" De ;
-  book_N = mkN "boek" De ;
-  boy_N = mkN "jongen" De ;
-  bread_N = mkN "brood" Het ;
-  buy_V2  = mkV2 "kopen" ;
-  car_N = mkN "auto" De ;
-  child_N = mkN "kind" Het ;
-  city_N = mkN "stad" De ;
-  clean_A = mkA "school" ;
-  clever_A = mkA "slim" ;
-  cloud_N = mkN "wolk" De ;
-  cow_N = mkN "cow" ;
-  dirty_A = mkA "dirty" ;
-  dog_N = mkN "dog" ;
-  drink_V2 = mkV2 "drink" ;
-  eat_V2 = mkV2 "eat" ;
-  find_V2 = mkV2 "find" ;
-  fire_N = mkN "fire" ;
-  fish_N = mkN "fish" ;
-  flower_N = mkN "flower" ;
-  friend_N = mkN "friend" ;
-  girl_N = mkN "girl" ;
-  good_A = mkA "good" ;
-  go_V = mkV "go" ;
-  grammar_N = mkN "grammar" ;
-  green_A = mkA "green" ;
-  heavy_A = mkA "heavy" ;
-  horse_N = mkN "horse" ;
-  hot_A = mkA "hot" ;
-  house_N = mkN "house" ;
-  john_PN : PN ;
-  jump_V = mkV "jump" ;
-  kill_V2 = mkV2 "kill" ;
-  know_VS : VS ;
-  language_N = mkN "language" ;
-  live_V = mkV "live" ;
-  love_V2  = mkV2 "love" ;
-  man_N = mkN "man" ;
-  milk_N = mkN "milk" ;
-  music_N = mkN "music" ;
-  new_A = mkA "new" ;
-  now_Adv = mkAdv "now" ;
-  old_A = mkA "old" ;
-  paris_PN : PN ;
-  play_V = mkV "play" ;
-  read_V2  = mkV2 "read" ;
-  ready_A = mkA "ready" ;
-  red_A = mkA "red" ;
-  river_N = mkN "river" ;
-  run_V = mkV "run" ;
-  sea_N = mkN "sea" ;
-  see_V2  = mkV2 "see" ;
-  ship_N = mkN "ship" ;
-  sleep_V = mkV "sleep" ;
-  small_A = mkA "small" ;
-  star_N = mkN "star" ;
-  teach_V2 = mkV2 "teach" ;
-  train_N = mkN "train" ;
-  travel_V = mkV "travel" ;
-  tree_N = mkN "tree" ;
-  understand_V2 = mkV2 "understand" ;
-  wait_V2 = mkV2 "wait" ;
-  walk_V = mkV "walk" ;
-  woman_N = mkN "woman" ;
-  yellow_A = mkA "yellow" ;
-  young_A = mkA "young" ; 
-  -}
 
 --------------------------
 -- Resource + paradigms --
