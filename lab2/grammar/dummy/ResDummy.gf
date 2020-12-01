@@ -21,18 +21,18 @@ oper
 
   worstN : Str -> Str -> Noun ;
   worstN   sg     pl  = {
-	s = table { Sg => sg ; 
-				Pl => pl }
+	s = table { Sg => sg ;
+	            Pl => pl }
     } ;
 
   regN : Str -> Noun ;
   regN sg =
-  	let pl : Str = case sg of {
-  					  b + ("a"|"e"|"i"|"o"|"u") + "y"
-  					  			=> sg + "s" ;
-  		              bab + "y" => bab + "ies" ;
-  		              _         => sg + "s" 
-    			    } ;
+    let pl : Str = case sg of {
+                     b + ("a"|"e"|"i"|"o"|"u") + "y"
+                               => sg + "s" ;
+                     bab + "y" => bab + "ies" ;
+                     _         => sg + "s"
+                       } ;
      in worstN sg pl ;
 
 -- Pronouns
